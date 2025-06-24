@@ -1,6 +1,19 @@
+kafka:
+  topic:
+    audio-uploaded: audio_uploaded
+
 spring:
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
   datasource:
-    url: jdbc:mysql://${DB_HOST:localhost}:3306/meetingdb
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/meetingdbTest
     username: ${DB_USER}
     password: ${DB_PASS}
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -17,4 +30,3 @@ management:
   endpoint:
     health:
       show-details: always
-
