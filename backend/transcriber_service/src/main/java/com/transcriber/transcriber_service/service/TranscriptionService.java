@@ -2,14 +2,22 @@ package com.transcriber.transcriber_service.service;
 
 import com.transcriber.transcriber_service.dto.Meeting;
 import com.transcriber.transcriber_service.dto.TranscriptionResultDTO;
+import com.transcriber.transcriber_service.producer.AudioTranscribedProducer;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class TranscriptionService {
+    public AudioTranscribedProducer producer;
+
+    public TranscriptionService(AudioTranscribedProducer producer){
+               this.producer=producer;
+    }
     public TranscriptionResultDTO simulateTranscription(Meeting meeting) {
         log.info("Transcribing file: {}", meeting.getFilePath());
 
@@ -23,6 +31,8 @@ public class TranscriptionService {
         result.setFileId(meeting.getFileId());
         result.setTranscriptText("Hello, this is a sample transcript for '" + meeting.getTitle() + "'");
         result.setTranscribedAt(LocalDateTime.now());
+
+        producer.sendAudioTranscribedEvent(result);
 
         log.info("Transcription complete: {}", result);
         return result;

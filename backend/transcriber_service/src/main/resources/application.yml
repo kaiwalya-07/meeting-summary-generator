@@ -1,5 +1,8 @@
 server:
   port: 8081
+kafka:
+  topic:
+    audio-transcribed: audio_transcribed
 
 spring:
   kafka:
