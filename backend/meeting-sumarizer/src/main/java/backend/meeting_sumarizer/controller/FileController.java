@@ -34,7 +34,7 @@ public class FileController {
             @RequestParam("title") String title
             ){
         try{
-            long fileId=fileService.uploadFile(file,uploader,title);
+            long fileId=fileService.uploadFile(file,uploader,title).getFileId();
 
             Meeting meeting=fileService.getMeetingById(fileId);
 

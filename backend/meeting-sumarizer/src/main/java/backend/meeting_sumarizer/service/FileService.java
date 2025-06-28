@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public interface FileService {
 
-    long uploadFile(MultipartFile file, String uploader, String title) throws IOException;
+    Meeting uploadFile(MultipartFile file, String uploader, String title) throws IOException;
 
     Meeting getMeetingById(long fileId);
 }

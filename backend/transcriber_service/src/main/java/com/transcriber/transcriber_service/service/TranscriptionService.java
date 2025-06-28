@@ -13,11 +13,9 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @Service
 public class TranscriptionService {
-    public AudioTranscribedProducer producer;
+    private final AudioTranscribedProducer producer;
 
-    public TranscriptionService(AudioTranscribedProducer producer){
-               this.producer=producer;
-    }
+
     public TranscriptionResultDTO simulateTranscription(Meeting meeting) {
         log.info("Transcribing file: {}", meeting.getFilePath());
 

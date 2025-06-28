@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -25,8 +26,9 @@ public class FileServiceImpl implements FileService{
 
 
     @Override
-    @CachePut(value = "meeting",key = "#result")
-    public long uploadFile(MultipartFile file, String uploader, String title) throws IOException {
+    @CachePut(value = "meeting",key = "#result.fileId")
+    @Transactional
+    public Meeting uploadFile(MultipartFile file, String uploader, String title) throws IOException {
         String uploadDir = "uploads/";
         String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
         Path filePath = Paths.get(uploadDir, fileName);
@@ -42,7 +44,7 @@ public class FileServiceImpl implements FileService{
                 .build();
 
         fileRepository.save(meeting);
-        return meeting.getFileId();
+        return meeting;
     }
 
     @Override
