@@ -29,23 +29,32 @@ public class FileServiceImpl implements FileService{
     @CachePut(value = "meeting",key = "#result.fileId")
     @Transactional
     public Meeting uploadFile(MultipartFile file, String uploader, String title) throws IOException {
+
         String uploadDir = "uploads/";
+
         String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
         Path filePath = Paths.get(uploadDir, fileName);
+        try{
 
-        Files.createDirectories(filePath.getParent());
-        Files.write(filePath, file.getBytes());
+          Files.createDirectories(filePath.getParent());
+          Files.write(filePath, file.getBytes());
 
-        Meeting meeting = Meeting.builder()
+          Meeting meeting = Meeting.builder()
                 .title(title)
                 .uploader(uploader)
                 .filePath(filePath.toString())
                 .uploadTime(LocalDateTime.now())
                 .build();
 
-        fileRepository.save(meeting);
-        return meeting;
+          fileRepository.save(meeting);
+          return meeting;
+
+        } catch (Exception e) {
+            Files.deleteIfExists(filePath);
+            throw e;
+        }
     }
+
 
     @Override
     @Cacheable(value = "meeting",key = "#fileId")
