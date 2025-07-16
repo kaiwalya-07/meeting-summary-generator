@@ -12,15 +12,17 @@ for message in consumer:
         transcript_text = data['transcriptText']
         file_id = data['fileId']
 
-        summary = generate_summary(transcript_text)
+        result = generate_summary(transcript_text)
 
-        result = {
+        payload = {
             'fileId': file_id,
-            'summaryText': summary
+            'summaryText': result['summary'],
+            'actionItems': result['actionItems'],
+            'questions': result['questions']
         }
 
-        print(f"Summary: {result}")
-        send_summary(result)
+        print(f"Extracted result: {payload}")
+        send_summary(payload)
 
     except Exception as e:
         print(f"Error: {e}")
