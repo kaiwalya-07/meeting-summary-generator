@@ -40,11 +40,12 @@ public class FileServiceImpl implements FileService{
           Files.write(filePath, file.getBytes());
 
           Meeting meeting = Meeting.builder()
-                .title(title)
-                .uploader(uploader)
-                .filePath(filePath.toString())
-                .uploadTime(LocalDateTime.now())
-                .build();
+                  .title(title)
+                  .uploader(uploader)
+                  .filePath(filePath.toString())
+                  .uploadTime(LocalDateTime.now())
+                  .status("processing")
+                  .build();
 
           fileRepository.save(meeting);
           return meeting;

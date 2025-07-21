@@ -32,4 +32,24 @@ public class Meeting implements Serializable {
     @Column(name="TIME")
     private LocalDateTime uploadTime;
 
+    @Lob
+    @Column(name = "ACTION")
+    private String actionItem;
+
+
+    @Lob
+    @Column(name = "QUESTIONS")
+    private String questions;
+
+
+
+    @Lob
+    @Column(name = "SUMMARY")
+    private String summary;
+
+
+    @Column(name = "STATUS")
+    private String status;
+
+
 }
